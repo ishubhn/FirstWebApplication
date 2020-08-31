@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,8 +21,9 @@
 					<th>Description</th>
 					<th>Target Date</th>
 					<th>Is It Done?</th>
-					<th>Delete</th>
-					</tr>
+					<th></th>
+					<th></th>
+				</tr>
 			</thead>
 			<tbody>
 				<!-- JSTL For Loop -->
@@ -28,8 +31,9 @@
 				<c:forEach items="${todos}" var="todo">
 					<tr>
 						<td>${todo.desc}</td>
-						<td>${todo.targetDate}</td>
+						<td><fmt:formatDate value="${todo.targetDate}" pattern="dd/MM/yyyy"/></td>
 						<td>${todo.done}</td>
+						<td><a href="/update-todo?id=${todo.id}" type="button" class="btn btn-success">Update</a></td>
 						<td><a href="/delete-todo?id=${todo.id}" type="button" class="btn btn-warning">Delete</a></td>
 					</tr>
 				</c:forEach>
