@@ -14,7 +14,19 @@ import com.in28minutes.springboot.web.service.LoginService;
 @Controller
 @SessionAttributes("name")
 public class LoginController {
+	@Autowired					/*wired to LoginService as it has @Component declared and matches with LoginService 
+									name here, so spring knew that is needs to create instance obj*/
+	LoginService service;
 	
+	@RequestMapping(value="/", method = RequestMethod.GET)
+	public String showLogin(ModelMap model) {
+		model.put("name", "Shubham");
+		return "welcome";
+	}
+	
+}
+
+
 //	@ResponseBody			/*to send string back to browser instead of jsp*/
 //	@RequestMapping(value="/login", method = RequestMethod.GET)
 //	@RequestMapping("/login")
@@ -24,26 +36,16 @@ public class LoginController {
 //		return "login";
 //		
 //	}
-	@Autowired					/*wired to LoginService as it has @Component declared and matches with LoginService 
-									name here, so spring knew that is needs to create instance obj*/
-	LoginService service;
-	
-	@RequestMapping(value="/login", method = RequestMethod.GET)
-	public String showLogin(ModelMap model) {
-		return "login";
-	}
-	
-	@RequestMapping(value="/login", method = RequestMethod.POST)
-	public String doLogin(ModelMap model, @RequestParam String name, @RequestParam String pass) {
-		boolean isValidUser = service.validateUser(name, pass);
-		
-		if(!isValidUser) {
-			model.put("errorMessage", "Invalid Credentials");
-			return "login";
-		}
-		
-		model.put("name", name); //to get param from user and add into jsp
-		model.put("pass", pass);
-		return "welcome";
-	}
-}
+
+
+/*
+ * @RequestMapping(value="/login", method = RequestMethod.POST) public String
+ * doLogin(ModelMap model, @RequestParam String name, @RequestParam String pass)
+ * { boolean isValidUser = service.validateUser(name, pass);
+ * 
+ * if(!isValidUser) { model.put("errorMessage", "Invalid Credentials"); return
+ * "login"; }
+ * 
+ * model.put("name", name); //to get param from user and add into jsp
+ * model.put("pass", pass); return "welcome"; }
+ */
